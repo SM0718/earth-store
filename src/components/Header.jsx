@@ -48,7 +48,7 @@ function Header() {
 
       {/* Side Cart Start */}
       <div onClick={() => setToggleHidden(!toggleHidden)}  className={`${toggleHidden? "flex z-10" : "hidden"} absolute w-full h-lvh bg-black/30 cursor-pointer`}/>
-    <div className={`${toggleHidden? "flex animate-[rightIn_1s] z-10" : "hidden"} h-lvh md:w-[350px] sm:w-5/6 w-full absolute bg-white right-0`}>
+    <div className={`${toggleHidden? "flex animate-[rightIn_1s] z-10" : "hidden"} h-screen md:w-[350px] sm:w-5/6 w-full absolute bg-white right-0`}>
       
       <div className='flex justify-between w-full h-[65px] border-b-[1px] border-slate-300'>
         <h1 className='ml-10 my-auto text-[#7faf59] font-bold'>Shopping Cart</h1>
@@ -66,9 +66,9 @@ function Header() {
       </div>
 
       {/* Visible Navigation Start */}
-        <div className='w-3/5 my-auto flex lg:justify-evenly justify-between relative'>
+        <div className='w-3/5 my-auto flex justify-end relative'>
 
-        <div className='w-2/5 xl:flex hidden justify-between'>
+        <div className='w-2/5 xl:flex hidden justify-between mx-auto'>
        {
         headerItems.map((items) => <div key={items.name} className='"serif": "Roboto" text-[17px] font-[17px]'>
             <NavLink to={items.slug}>{items.name}</NavLink>
@@ -79,7 +79,7 @@ function Header() {
       </div>
       {/* Visible Navigation End */}
 
-      <div className='flex justify my-auto ml-auto gap-8 z-0'>
+      <div className='flex my-auto xl:mr-auto mr-0 gap-8 z-0'>
         <span className='relative'>
           <p className='absolute bg-black text-white rounded-full text-xs font-black px-1 left-5 bottom-4'>{cartValue}</p>
           <img onClick={() => setToggleHidden(!toggleHidden)} className='h-6 w-6 cursor-pointer' src='./handbag.png'/>
