@@ -7,6 +7,7 @@ import {
   About,
   Contact,
   Home,
+  Product,
   Shop
 } from './pages/index.js'
 
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route path='/about' element={<About />}/>
       <Route path='/shop' element={<Shop />}/>
       <Route path='/contact' element={<Contact />}/>
+      <Route path='/shop/:slug' element={<Product />}/>
     </Route>
   ))
 

@@ -5,3 +5,13 @@
 ::selection {
   @apply bg-[#74a84a] text-black; /* Change these classes to the desired colors */
 }
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  background-color: var(--thumb-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
