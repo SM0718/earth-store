@@ -63,9 +63,9 @@ useEffect(() => {
   return (
     <div className='w-full border-t-[1px]'>
     
-    <div className='min-h-full w-5/6 mx-auto mt-16 flex'>
+    <div className='min-h-full w-full md:w-5/6 mx-auto mt-16 flex flex-col-reverse md:flex-row'>
       
-    <aside className='h-dvh w-1/4 pr-4 flex flex-col items-center'>
+    <aside className='md:h-dvh  md:w-1/4 pr-4 flex flex-col items-center'>
       <form onSubmit={handleSubmit(create)} className='w-full flex gap-2 px-4'>
                 
         <Input
@@ -104,7 +104,7 @@ useEffect(() => {
       </div>
     </aside>
 
-      <div className='w-3/4 pl-12 border-l-[1px]'>
+      <div className='md:w-3/4 md:full pl-12 border-l-[1px]'>
         <div>
           <Breadcrumb />
           <h1 className='text-[#74A84A] text-[70px] font-medium "serif": "Jost"'>{searchVal? `Search Results For: "${searchVal}"` : fullPath[0].toUpperCase()}</h1>
@@ -128,11 +128,11 @@ useEffect(() => {
           
         </div>
 
-         <div className='h-auto w-full pt-8 flex justify-start flex-wrap gap-2'>
+         <div className='h-auto w-full pt-8 flex justify-center md:justify-start flex-wrap gap-2'>
           
          {
-                    (data.length !== 0)? data.map((items) => <div className='w-64 mt-4 mr-4 relative group' key={items.posterName}>
-                      <img className='h-64' src={items.posterImg} alt={items.posterName}/>
+                    (data.length !== 0)? data.map((items) => <div className='w-full md:w-64 mt-4 mr-4 relative group' key={items.posterName}>
+                      <img className='md:h-64' src={items.posterImg} alt={items.posterName}/>
                       
                       <span className='group/item'>
                         <div className='h-8 top-4 right-14 px-2 bg-[#74a84a] text-white
