@@ -65,7 +65,7 @@ useEffect(() => {
     
     <div className='min-h-full w-full md:w-5/6 mx-auto mt-16 flex flex-col-reverse md:flex-row'>
       
-    <aside className='md:h-dvh  md:w-1/4 pr-4 flex flex-col items-center'>
+    <aside className='md:h-dvh  md:w-1/4 md:pr-4 pt-8 flex flex-col items-center'>
       <form onSubmit={handleSubmit(create)} className='w-full flex gap-2 px-4'>
                 
         <Input
@@ -104,14 +104,14 @@ useEffect(() => {
       </div>
     </aside>
 
-      <div className='md:w-3/4 md:full pl-12 border-l-[1px]'>
+      <div className='md:w-3/4 md:full md:pl-12 px-2 border-l-[1px]'>
         <div>
           <Breadcrumb />
           <h1 className='text-[#74A84A] text-[70px] font-medium "serif": "Jost"'>{searchVal? `Search Results For: "${searchVal}"` : fullPath[0].toUpperCase()}</h1>
         </div>
 
         <div className='mr-24 mt-8'>
-          <div className=' flex justify-between'>
+          <div className=' flex md:flex-row flex-col justify-between'>
             <p>Showing all {totalItems} results</p>
             <select className='bg-white px-4 py-2 focus:outline-none'>
             <option onClick={(e) => handelSorting(e.target.value)}>
