@@ -42,6 +42,10 @@ function Header() {
     navigate('/shop')
   }
   
+  const handelMenu = (e) => {
+    setShow(false)
+    navigate(`${e}`)
+  }
 
   return (
     <div className='relative h-[80px] z-20 flex'>
@@ -97,7 +101,7 @@ function Header() {
       
       <ul className={`${show? "flex  flex-col justify-evenly" : "hidden"} xl:hidden w-full h-[175px] bg-white mt-[80px]`}>
       {
-        headerItems.map((items) => <li key={items.name} onClick={() => navigate(`${items.slug}`)} className='h-full "serif": "Roboto" flex items-center text-[16px] font-[17px]
+        headerItems.map((items) => <li key={items.name} onClick={() => handelMenu(items.slug)} className='h-full "serif": "Roboto" flex items-center text-[16px] font-[17px]
          border-t last:border-b px-[20px] m-0 cursor-pointer'>
             <NavLink className={"flex items-center"}>{items.name}</NavLink>
           </li>

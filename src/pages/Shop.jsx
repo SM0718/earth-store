@@ -113,14 +113,14 @@ useEffect(() => {
         <div className='mr-24 mt-8'>
           <div className=' flex md:flex-row flex-col justify-between'>
             <p>Showing all {totalItems} results</p>
-            <select className='bg-white px-4 py-2 focus:outline-none'>
-            <option onClick={(e) => handelSorting(e.target.value)}>
+            <select className='bg-white px-4 py-2 focus:outline-none' onChange={(e) => handelSorting(e.target.value)}>
+            <option value="Default Sorting">
                 Default Sorting
               </option>
-              <option onClick={(e) => handelSorting(e.target.value)}>
+              <option value="Sort by price: Low to High">
                 Sort by price: Low to High
               </option>
-              <option onClick={(e) => handelSorting(e.target.value)}>
+              <option value="Sort by price: High to Low">
                 Sort by price: High to Low
               </option>
             </select>
