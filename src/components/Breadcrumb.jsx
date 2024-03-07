@@ -16,10 +16,10 @@ function Breadcrumb({className}) {
 
   return (
     <div className={`${className}`}>
-      <span className='cursor-pointer' onClick={() => navigate('/')}>Home </span>
+      <span className='cursor-pointer hover:text-[#74A84A]' onClick={() => navigate('/')}>Home </span>
       {
         fullPath.map((items, index) => {
-          return <span className={(fullPath.length === index+1)? null : "cursor-pointer"} key={items} onClick={() => handelClick(index)}>{` / ${decodeURIComponent(items)}`}</span>
+          return <span className={`${(fullPath.length === index+1)? null : "cursor-pointer hover:text-[#74A84A]"} "serif": "Roboto" `} key={items} onClick={() => handelClick(index)}>{` / ${decodeURIComponent(items)}`}</span>
         })
       }
     </div>

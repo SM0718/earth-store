@@ -132,7 +132,7 @@ useEffect(() => {
           
          {
                     (data.length !== 0)? data.map((items) => <div className='w-full md:w-64 mt-4 mr-4 relative group' key={items.posterName}>
-                      <img className='md:h-64' src={items.posterImg} alt={items.posterName}/>
+                      <img className='md:h-64' src={items.posterImg} alt={items.posterName} onClick={() => navigate(`${items.posterName}`)}/>
                       
                       <span className='group/item'>
                         <div className='h-8 top-4 right-14 px-2 bg-[#74a84a] text-white
@@ -161,7 +161,6 @@ useEffect(() => {
 
       
     </div>
-
     <Footer />
     </div>
     

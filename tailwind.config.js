@@ -18,7 +18,7 @@ export default {
     },
     fontFamily: {
       serif: ["Roboto", "Jost"]
-    }
+    },
   },
   plugins: [],
 }

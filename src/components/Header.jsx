@@ -86,9 +86,9 @@ function Header() {
       <div className='flex my-auto xl:mr-auto mr-0 gap-8 z-0'>
         <span className='relative'>
           <p className='absolute bg-black text-white rounded-full text-xs font-black px-1 left-5 bottom-4'>{cartValue}</p>
-          <img onClick={() => setToggleHidden(!toggleHidden)} className='h-6 w-6 cursor-pointer' src='./handbag.png'/>
+          <img onClick={() => setToggleHidden(!toggleHidden)} className='h-6 w-6 cursor-pointer' src='/./handbag.png'/>
         </span>
-        <img className='h-6 w-6 xl:flex hidden' src='./user.png'/>
+        <img className='h-6 w-6 xl:flex hidden' src='/./user.png'/>
         <span onClick={() => setShow(!show)} className={`h-8 w-8 p-1 flex xl:hidden bg-black text-white justify-center items-center
          font-semibold cursor-pointer`}>{show? <span>&#10005;</span> : "☰"}</span>
       </div>

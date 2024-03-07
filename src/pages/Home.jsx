@@ -20,7 +20,7 @@ function Home() {
   return (
     <>
     
-    <div className='h-auto w-full absolute z-0'>
+    <div className='min-h-full w-full absolute z-0'>
       <div className='h-lvh flex flex-col bg-center bg-no-repeat bg-cover' style={{backgroundImage: "url(./First-Forest.webp)"}}>
           <div className='my-auto text-center leading-tight'>
                   <h1 className='text-[80px] font-semibold "serif": "Jost" tracking-widest text-[#2c541d]'>EARTH</h1>
@@ -89,7 +89,7 @@ function Home() {
         </Button>
       </div>
       </div>
-<Footer />
+      <Footer />
     </div>
     
     </>
