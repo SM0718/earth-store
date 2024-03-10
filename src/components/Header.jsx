@@ -6,7 +6,7 @@ function Header() {
 
   const navigate = useNavigate()
   const [cartValue, setCartValue] = useState(0)
-  const [toggleHidden, setToggleHidden] = useState(false)
+  const [toggleHidden, setToggleHidden] = useState()
   const [show, setShow] = useState(false)
 
   useEffect(() => {
@@ -16,7 +16,6 @@ function Header() {
       document.body.style.overflow = 'unset';
     }
   }, [toggleHidden])
-
 
   const headerItems = [
     {

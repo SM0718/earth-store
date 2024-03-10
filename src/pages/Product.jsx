@@ -41,9 +41,9 @@ function Product() {
 
           <div className='flex justify-start gap-8'>
             <div className='flex'>
-              <Button onClick={() => setAmount((prev) => prev+1)} className="w-10 border flex justify-center items-center p-2">+</Button>
-              <Input className="w-10 border text-center p-2" type={'text'} value={amount}/>
               <Button onClick={() => setAmount((prev) => (amount > 1)? prev-1 : prev)} className="w-10 border flex justify-center items-center p-2">-</Button>
+              <Input className="w-10 border text-center p-2" type={'text'} value={amount}/>
+              <Button onClick={() => setAmount((prev) => prev+1)} className="w-10 border flex justify-center items-center p-2">+</Button>
             </div>
             <div>
               <Button className={"bg-[#74A84A] tracking-wide px-4 py-2 text-white hover:bg-green-800"}>
