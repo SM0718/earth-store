@@ -1,13 +1,15 @@
 import React from 'react'
 import { posters } from '../infos/info'
+import { useNavigate } from 'react-router-dom'
 
 function Recommemded() {
     const data = posters.slice(0,3)
+    const navigate = useNavigate()
   return (
     <div className='h-auto w-5/6  mx-auto flex flex-col md:flex-row gap-6'>
           
     {
-      (data.length !== 0)? data.map((items) => <div className='md:w-5/6 mx-auto relative group' key={items.posterName}>
+      (data.length !== 0)? data.map((items) => <div onClick={() => navigate(`/shop/${items.posterName}`)} className='md:w-5/6 mx-auto relative group' key={items.posterName}>
         <img src={`/.${items.posterImg}`} alt={items.posterName}/>
         
         <span className='group/item'>

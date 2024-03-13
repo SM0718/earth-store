@@ -79,6 +79,7 @@ function Product() {
       </div>
 
       <div className='sm:mt-4'>
+        <h1 className='w-5/6 mx-auto text-6xl pb-8 font-semibold'>Related Products</h1>
         <Recommemded /> 
       </div>
     </div>
