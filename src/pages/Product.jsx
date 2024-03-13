@@ -5,6 +5,8 @@ import { posters } from '../infos/info'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import Reviews from '../components/Reviews'
+import Recommemded from '../components/Recommemded'
+import Footer from '../components/Footer'
 
 function Product() {
 
@@ -12,6 +14,7 @@ function Product() {
   const poster = posters.filter((items) => items.posterName === slug)
   const navigate = useNavigate()
   const [amount, setAmount] = useState(1)
+  
 
   const handelKeyDown = (e) => {
     if(!isNaN(e) && !(e === 'Backspace')) {
@@ -24,9 +27,9 @@ function Product() {
 }
 
   return (
-    <div className='flex flex-col items-center px-4 py-20 border-t'>
-      
-      <div className='h-auto md:w-3/4 w-full md:px-4 flex xl:flex-row flex-col xl:items-center md:gap-6 gap-8'>
+    <>
+    <div className='min-h-full flex flex-col items-center px-4 py-20 border-t'>
+        <div className='h-auto md:w-3/4 w-full md:px-4 flex xl:flex-row flex-col xl:items-center md:gap-6 gap-8'>
 
         <div className='overflow-auto relative' >
           <img 
@@ -71,11 +74,16 @@ function Product() {
         </div>
       </div>
 
-      <div className='w-full md:w-3/4 mt-8 xl:mt-20 border-t'>
+      <div className='h-svh w-full md:w-3/4 mt-8 xl:mt-20 border-t'>
         <Reviews />
       </div>
-      
+
+      <div className='sm:mt-4'>
+        <Recommemded /> 
+      </div>
     </div>
+     <Footer />
+     </>
   )
 }
 
