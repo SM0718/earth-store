@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import Button from './Button'
 import StarIcon from './StarIcon'
+import Input from './Input'
+import { useForm } from "react-hook-form";
 
 function Reviews() {
 
@@ -8,10 +10,15 @@ function Reviews() {
   const [reviewAmt, setReviewAmt] = useState(0)
   const [color, setColor] = useState("white")
   const [childData, setChildData] = useState("");
+  const {register, handleSubmit} = useForm()
 
   const receiveDataFromChild = (data) => {
     setChildData(data);
   };
+
+  const createReview = (data) => {
+    console.log(data)
+  }
 
   return (
     <div className='w-full text-[#585858]'>
@@ -24,7 +31,7 @@ function Reviews() {
         </span>
     </div>
 
-    <div className='relative mt-6'>
+    <div className='w-full relative mt-6 border-r-8'>
 
       <div className={`${active? "flex flex-col gap-2 absolute" : "hidden"}`}>
 
@@ -57,17 +64,54 @@ function Reviews() {
 
       <div className={`${active? "hidden" : "flex flex-col gap-2 absolute"} w-full`}>
         <p>There are no reviews yet.</p>
-        <div className='p-2 border'>
+        <div className='p-2 px-6 border flex flex-col gap-4'>
           <div className='flex flex-col gap-1'>
             <h1 className='text-[22.78px]'>Be the first to review “Postcard V1”</h1>
             <p className='text-[17px]'>Your email address will not be published. Required fields are marked *</p>
           </div>
+
           <div className='flex gap-4 items-center'>
             <span className='flex items-center text-[20px] font-semibold'>Your rating *</span>
             <span >
             <StarIcon sendDataToParent={receiveDataFromChild}/>
             </span>
           </div>
+
+          <form onSubmit={handleSubmit(createReview)} className='flex flex-col gap-3'>
+
+            <label className='flex items-center text-[20px] font-semibold'>Your review *</label>
+            <textarea 
+              className="w-full h-[100px] p-2 resize border"
+              required={true}
+              {...register("review", { required: true })}
+            />
+
+            <div className='flex flex-col md:flex-row gap-2 md:gap-4'>
+
+              <span className='md:w-1/2 w-full flex flex-col md:gap-2 justify-evenly py-2'>
+            <label className='flex items-center text-[20px] font-semibold '>Name *</label>
+            <Input 
+              className="w-full p-3 resize border"
+              required={true}
+              {...register("name", { required: true })}
+            />
+            </span>
+
+              <span className='md:w-1/2 w-full flex flex-col md:gap-2 justify-evenly py-2'>
+            <label className='flex items-center text-[20px] font-semibold'>Email*</label>
+            <Input 
+              className="w-full p-3 resize border"
+              required={true}
+              {...register("email", { required: true })}
+            />
+            </span>
+            </div>
+
+            <Button className={"w-32 bg-[#74A84A] tracking-wide px-4 py-2 text-white hover:bg-green-800"}>
+              SUBMIT
+            </Button>
+
+          </form>
         </div>
       </div>
       

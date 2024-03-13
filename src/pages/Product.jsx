@@ -12,11 +12,23 @@ function Product() {
   const poster = posters.filter((items) => items.posterName === slug)
   const navigate = useNavigate()
   const [amount, setAmount] = useState(1)
-  return (
-    <div className='flex flex-col items-center py-20 border-t'>
-      <div className='h-[400px] w-3/4 flex gap-10'>
 
-        <div className='h-[400px] w-1/2 my-auto overflow-hidden relative'>
+  const handelKeyDown = (e) => {
+    if(!isNaN(e) && !(e === 'Backspace')) {
+      setAmount((prev) => prev + e)
+    } else if(e === 'Backspace') {
+      setAmount((prev) => prev? prev.slice(0, -1) : "")
+    } else {
+      setAmount("")
+    }
+}
+
+  return (
+    <div className='flex flex-col items-center px-4 py-20 border-t'>
+      
+      <div className='h-auto md:w-3/4 w-full md:px-4 flex xl:flex-row flex-col xl:items-center md:gap-6 gap-8'>
+
+        <div className='overflow-auto relative' >
           <img 
             className='h-full w-full hover:scale-125'
             src={`/${poster[0].posterImg}`}/>
@@ -26,11 +38,11 @@ function Product() {
           
         </div>
 
-        <div className='w-1/2 flex flex-col gap-2'>
+        <div className='w-full xs:w-1/2 flex flex-col gap-2'>
 
         <div className='flex flex-col gap-4'>
           <Breadcrumb />
-          <h1 onClick={() => navigate('/shop')} className='text-[#74A84A] text-[17px] font-normal "serif": "Jost" cursor-pointer'>Postcards</h1>
+          <h1 onClick={() => navigate('/shop')} className='text-[#74A84A] text-[17px] w-[80px] font-normal "serif": "Jost" cursor-pointer'>Postcards</h1>
         </div>
           
           <div>
@@ -42,7 +54,7 @@ function Product() {
           <div className='flex justify-start gap-8'>
             <div className='flex'>
               <Button onClick={() => setAmount((prev) => (amount > 1)? prev-1 : prev)} className="w-10 border flex justify-center items-center p-2">-</Button>
-              <Input className="w-10 border text-center p-2" type={'text'} value={amount}/>
+              <Input onKeyDown={(e) => handelKeyDown(e.nativeEvent.key)} className="w-10 border text-center p-2" type={'text'} value={amount}/>
               <Button onClick={() => setAmount((prev) => prev+1)} className="w-10 border flex justify-center items-center p-2">+</Button>
             </div>
             <div>
@@ -59,7 +71,7 @@ function Product() {
         </div>
       </div>
 
-      <div className='w-3/4 mt-20 border-t'>
+      <div className='w-full md:w-3/4 mt-8 xl:mt-20 border-t'>
         <Reviews />
       </div>
       

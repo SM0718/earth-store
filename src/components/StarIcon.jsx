@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 const StarIcon = ({sendDataToParent}) => {
     const [rating, setRating] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0)
+    const [clicked, setClicked] = useState(false)
 
   const handleMouseEnter = (index) => {
     if(currentIndex === 0){
@@ -12,8 +13,14 @@ const StarIcon = ({sendDataToParent}) => {
   const handleClick = (index) => {
     setRating(index + 1);
     setCurrentIndex(index + 1)
+    setClicked(true)
     sendDataToParentOnClick(index+1)
   };
+  const handleMouseLeave = (e) => {
+    if(!clicked) {
+      setRating(0)
+    }
+  }
 
   const sendDataToParentOnClick = (inputValue) => {
     sendDataToParent(inputValue);
@@ -30,7 +37,9 @@ const StarIcon = ({sendDataToParent}) => {
     </span>
   }
   return (
-    <div className="flex items-center my-auto gap-2">
+    <div className="flex items-center my-auto gap-2"
+          onMouseLeave={(e) => handleMouseLeave(e)}
+    >
     {[...Array(5)].map((_, index) => (
       <StarRating
         key={index}
