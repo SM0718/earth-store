@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import Button from './Button'
+import appwriteService from '../appwrite/config'
+import CartItems from './CartItems'
 
 function Header() {
 
@@ -8,6 +10,23 @@ function Header() {
   const [cartValue, setCartValue] = useState(0)
   const [toggleHidden, setToggleHidden] = useState()
   const [show, setShow] = useState(false)
+  const [cartItems, setCartItems] = useState([])
+
+  const cartData = async() => {
+    try {
+      const items = await appwriteService.getCartData()
+      if(items) {
+        setCartValue(items.total)
+        setCartItems(items.documents)
+      }
+    } catch (error) {
+      
+    }
+  }
+
+  useEffect(() => {
+    cartData()
+  })
 
   useEffect(() => {
     if(toggleHidden) {
@@ -51,12 +70,13 @@ function Header() {
 
       {/* Side Cart Start */}
       <div onClick={() => setToggleHidden(!toggleHidden)}  className={`${toggleHidden? "flex z-10" : "hidden"} absolute w-full h-lvh bg-black/30 cursor-pointer`}/>
-    <div className={`${toggleHidden? "flex animate-[rightIn_1s] z-10" : "hidden"} h-screen md:w-[350px] sm:w-5/6 w-full absolute bg-white right-0`}>
+    <div className={`${toggleHidden? "flex flex-col animate-[rightIn_1s] z-10" : "hidden"} h-screen md:w-[350px] sm:w-5/6 w-full absolute bg-white right-0`}>
       
       <div className='flex justify-between w-full h-[65px] border-b-[1px] border-slate-300'>
         <h1 className='ml-10 my-auto text-[#7faf59] font-bold'>Shopping Cart</h1>
         <button onClick={() => setToggleHidden(!toggleHidden)} className='mr-5 text-[#7faf59]'>&#10005;</button>
       </div>
+      {cartItems && <CartItems handelMenu={handelMenu} cartItems={cartItems}/>}
       <Button onClick={() => handelNavigate()} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' absolute bottom-4 "}>CONTINUE SHOPPING</Button>
     </div>
     {/* Side Cart End */}
@@ -84,7 +104,7 @@ function Header() {
 
       <div className='flex my-auto xl:mr-auto mr-0 gap-8 z-0'>
         <span className='relative'>
-          <p className='absolute bg-black text-white rounded-full text-xs font-black px-1 left-5 bottom-4'>{cartValue}</p>
+          <p className='absolute bg-black text-white rounded-full text-xs font-bold shadow-md px-1 left-5 bottom-4'>{cartValue}</p>
           <img onClick={() => setToggleHidden(!toggleHidden)} className='h-6 w-6 cursor-pointer' src='/./handbag.png'/>
         </span>
         <img className='h-6 w-6 xl:flex hidden' src='/./user.png'/>
