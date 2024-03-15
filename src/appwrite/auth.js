@@ -35,31 +35,13 @@ export class AuthService {
         }
     }
 
-    async phoneLogin({number}) {
+    async anonymousSession() {
         try {
-            const sessionId = ID.unique();
-            const sessionToken = await this.account.createPhoneSession(sessionId, number);
-
-            if (sessionToken) {
-                return sessionToken.userId;
-            }
+            return await this.account.createAnonymousSession()
         } catch (error) {
-            alert("Appwrite service :: phoneLogin :: error", error);
-            throw error;
+            console.log("Appwrite serive :: anonymousSession :: error", error);
         }
     }
-
-    async phoneSession({userId, secretCode}){
-        try {
-            const session = await this.account.updatePhoneSession(userId, secretCode)
-            if(session){
-                return session
-            }
-        } catch (error) {
-            alert("Appwrite serive :: phoneSession :: error", error);
-        }
-    }
-
 
     async getCurrentUser() {
         try {

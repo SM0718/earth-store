@@ -7,6 +7,7 @@ import Input from '../components/Input'
 import Reviews from '../components/Reviews'
 import Recommemded from '../components/Recommemded'
 import Footer from '../components/Footer'
+import authService from '../appwrite/auth'
 
 function Product() {
 
@@ -14,6 +15,24 @@ function Product() {
   const poster = posters.filter((items) => items.posterName === slug)
   const navigate = useNavigate()
   const [amount, setAmount] = useState(1)
+
+  const session = async() => {
+    try {
+      // const sessionData = await authService.anonymousSession()
+      // if(sessionData){
+      //   console.log(sessionData)
+      const currentUser = await authService.getCurrentUser()
+      if(currentUser){
+        console.log(currentUser)
+      }
+      }
+     catch (error) {
+      console.log(error)
+    }
+  }
+
+  
+  
   
 
   const handelKeyDown = (e) => {

@@ -12,8 +12,8 @@ export class Service{
         this.databases = new Databases(this.client);
     }
 
-    async createCartItems(productName, productImg, productPrice, amount){
-        console.log(productName, productImg, productPrice, amount)
+    async createCartItems(productName, productImg, productPrice, amount, ip){
+        console.log(ip)
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -24,10 +24,11 @@ export class Service{
                     productImg,
                     productPrice,
                     amount,
+                    ip,
                 }
             )
         } catch (error) {
-            console.log("Appwrite serive :: createPost :: error", error.message);
+            console.log("Appwrite serive :: createCartItems :: error", error.message);
         }
     }
 
@@ -76,13 +77,13 @@ export class Service{
         }
     }
 
-    async getCartData(){
+    async getCartData(ip){
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 [
-                    Query.startsWith("productName", "Poster")
+                    Query.startsWith("ip", ip)
                 ]
             )
         } catch (error) {

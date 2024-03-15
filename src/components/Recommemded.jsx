@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { posters } from '../infos/info';
 import { useNavigate } from 'react-router-dom';
 import appwriteService from '../appwrite/config'
@@ -6,11 +6,26 @@ import appwriteService from '../appwrite/config'
 function Recommended() {
     const data = posters.slice(0, 3);
     const navigate = useNavigate();
+    const [ip, setIp] = useState("")
 
-    const addItem = async(productName, productImg, productPrice, amount=1) => {
-      console.log("Inside Recommended", productName, productImg, productPrice, amount)
+    useEffect(() => {
+        fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        setIp(data.ip);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+      }, [])
+
+    const addItem = async(productName, productImg, productPrice, amount=1, ip) => {
+      console.log("Inside Recommended", amount, ip)
       try {
-          const info = await appwriteService.createCartItems(productName, productImg, productPrice.toString(), amount.toString())
+          const info = await appwriteService.createCartItems(productName, productImg,
+             productPrice.toString(),
+             amount.toString(),
+             ip)
           if(info) {
               console.log(info)
           }
@@ -43,9 +58,12 @@ function Recommended() {
                               addItem(
                                     items.posterName,
                                     items.posterImg,
-                                    items.posterPrice
+                                    items.posterPrice,
+                                    1,
+                                    ip
                                 )
-                            } className='h-8 w-8 group-hover:flex group-hover:justify-center rounded-full peer absolute top-4 right-4 bg-white hidden cursor-pointer'>
+                            }
+                            className='h-8 w-8 group-hover:flex group-hover:justify-center rounded-full peer absolute top-4 right-4 bg-white hidden cursor-pointer'>
                                 <img className='h-4 w-4 my-auto' src='/./handbag.png' />
                             </span>
                         </span>

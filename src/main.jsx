@@ -11,6 +11,7 @@ import {
   Shop
 } from './pages/index.js'
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>

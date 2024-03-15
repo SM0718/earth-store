@@ -6,6 +6,7 @@ import Button from '../components/Button'
 import { posters } from '../infos/info'
 import {useForm} from 'react-hook-form'
 import { useNavigate, useLocation } from 'react-router-dom'
+import appwriteService from '../appwrite/config'
 
 
 function Shop() {
@@ -16,9 +17,37 @@ function Shop() {
   const [data, setData] = useState(posters)
   const [searchVal, setSearchVal] = useState("")
   const [sortingValue, setSortingValue] = useState("")
+  const [ip, setIp] = useState("")
   const navigate = useNavigate()
   const location = useLocation()
   const fullPath = location.pathname.split("/").filter(x => x)
+
+  useEffect(() => {
+    fetch('https://api.ipify.org?format=json')
+  .then(response => response.json())
+  .then(data => {
+    setIp(data.ip);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+  }, [])
+
+const addItem = async(productName, productImg, productPrice, amount=1, ip) => {
+  console.log("Inside Recommended", amount, ip)
+  try {
+      const info = await appwriteService.createCartItems(productName, productImg,
+         productPrice.toString(),
+         amount.toString(),
+         ip)
+      if(info) {
+          console.log(info)
+      }
+  } catch (error) {
+      console.log(error)
+  }
+}
+
 
   const create = (searchValue) => {
       setSearchVal(searchValue.search)
@@ -139,7 +168,15 @@ useEffect(() => {
                        rounded hidden group-hover/item:flex group-hover/item:justify-center items-center absolute'>
                           <p className='text-xs'>Add to cart</p>
                         </div>
-                        <span className='h-8 w-8 group-hover:flex group-hover:justify-center
+                        <span onClick={() =>
+                              addItem(
+                                    items.posterName,
+                                    items.posterImg,
+                                    items.posterPrice,
+                                    1,
+                                    ip,
+                                )
+                            } className='h-8 w-8 group-hover:flex group-hover:justify-center
                        rounded-full peer absolute top-4 right-4 bg-white hidden cursor-pointer'>
                         <img className='h-4 w-4 my-auto' src='./handbag.png'/>
                       </span>

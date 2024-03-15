@@ -15,10 +15,10 @@ function CartItems(cartItems, handelMenu) {
   }
     
   return (
-    <div>
+    <div className='h-1/2 overflow-scroll'>
         {
             cartItems.cartItems.map((items) => {
-                    return <div className='flex justify-between px-2 my-4'>
+                    return <div key={items.$id} className='flex justify-between mx-4 py-4 last:border-b-0 border-b'>
                         <span onClick={() => navigate(`/shop/${items.productName}`)} className='flex cursor-pointer'>
                             <img className='h-16 w-16 mx-4' src={`/${items.productImg}`}/>
                             <span className='py-1 flex flex-col justify-between'>

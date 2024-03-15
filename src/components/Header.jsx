@@ -11,10 +11,23 @@ function Header() {
   const [toggleHidden, setToggleHidden] = useState()
   const [show, setShow] = useState(false)
   const [cartItems, setCartItems] = useState([])
+  const [ip, setIp] = useState("")
+
+  useEffect(() => {
+    fetch('https://api.ipify.org?format=json')
+  .then(response => response.json())
+  .then(data => {
+    setIp(data.ip);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+  }, [])
+
 
   const cartData = async() => {
     try {
-      const items = await appwriteService.getCartData()
+      const items = await appwriteService.getCartData(ip)
       if(items) {
         setCartValue(items.total)
         setCartItems(items.documents)
@@ -27,6 +40,8 @@ function Header() {
   useEffect(() => {
     cartData()
   })
+
+ 
 
   useEffect(() => {
     if(toggleHidden) {
@@ -77,7 +92,10 @@ function Header() {
         <button onClick={() => setToggleHidden(!toggleHidden)} className='mr-5 text-[#7faf59]'>&#10005;</button>
       </div>
       {cartItems && <CartItems handelMenu={handelMenu} cartItems={cartItems}/>}
-      <Button onClick={() => handelNavigate()} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' absolute bottom-4 "}>CONTINUE SHOPPING</Button>
+      <div className=' bg-red-400'>
+            <Button onClick={() => navigate('/cart')} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' absolute bottom-20 hover:bg-green-900 text-white"}>VIEW CART</Button>
+            <Button onClick={() => handelNavigate()} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' absolute bottom-2 hover:bg-green-900 text-white"}>{(cartItems.length > 0)? "CHECKOUT" : "CONTINUE SHOPPING"}</Button>
+      </div>
     </div>
     {/* Side Cart End */}
     
