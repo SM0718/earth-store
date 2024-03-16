@@ -2,33 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { posters } from '../infos/info';
 import { useNavigate } from 'react-router-dom';
 import appwriteService from '../appwrite/config'
+import authService from '../appwrite/auth';
+import { useDispatch, useSelector } from 'react-redux'
+
 
 function Recommended() {
     const data = posters.slice(0, 3);
     const navigate = useNavigate();
-    const [ip, setIp] = useState("")
+    const userID = useSelector((state) => state.userID)
 
-    useEffect(() => {
-        fetch('https://api.ipify.org?format=json')
-      .then(response => response.json())
-      .then(data => {
-        setIp(data.ip);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-      }, [])
-
-    const addItem = async(productName, productImg, productPrice, amount=1, ip) => {
-      console.log("Inside Recommended", amount, ip)
+    const addItem = async(name, price, img,) => {
       try {
-          const info = await appwriteService.createCartItems(productName, productImg,
-             productPrice.toString(),
-             amount.toString(),
-             ip)
+          const user = await authService.getCurrentUser()
+          if(user){
+            const info = await appwriteService.createCartItems(name, price.toString(), user.$id, img)
           if(info) {
               console.log(info)
+            }
           }
+          
       } catch (error) {
           console.log(error)
       }
@@ -57,10 +49,9 @@ function Recommended() {
                             <span onClick={() =>
                               addItem(
                                     items.posterName,
-                                    items.posterImg,
                                     items.posterPrice,
-                                    1,
-                                    ip
+                                    items.posterImg,
+
                                 )
                             }
                             className='h-8 w-8 group-hover:flex group-hover:justify-center rounded-full peer absolute top-4 right-4 bg-white hidden cursor-pointer'>

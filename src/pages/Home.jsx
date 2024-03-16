@@ -42,7 +42,7 @@ function Home() {
       <h1 className='text-start md:text-center font-semibold text-[25px] md:text-[41px] mb-10 "serif": "Jost"'>WHAT OUR CUSTOMERS SAY</h1>
         <div className='w-full flex flex-col md:flex-row gap-16'>
         {
-        reviews.map((items) => <div className='w-full md:w-[300px] mx-auto'>
+        reviews.map((items) => <div key={items.name} className='w-full md:w-[300px] mx-auto'>
           <img className='h-6 mb-4' src="./quotation-mark.png"/>
             <p className='text-[17px] my-4 leading-loose'>{items.comment}</p>
             <img className='rounded-full my-4' src={items.pic}/>

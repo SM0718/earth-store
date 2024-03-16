@@ -2,7 +2,10 @@ import React, {useState, useEffect} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import Button from './Button'
 import appwriteService from '../appwrite/config'
+import { login } from '../app/playerSlicer'
+import authService from '../appwrite/auth'
 import CartItems from './CartItems'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Header() {
 
@@ -11,35 +14,50 @@ function Header() {
   const [toggleHidden, setToggleHidden] = useState()
   const [show, setShow] = useState(false)
   const [cartItems, setCartItems] = useState([])
-  const [ip, setIp] = useState("")
+  const dispatch = useDispatch()
+  const [selector, setSelector] = useState("")
 
-  useEffect(() => {
-    fetch('https://api.ipify.org?format=json')
-  .then(response => response.json())
-  .then(data => {
-    setIp(data.ip);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
-  }, [])
-
-
-  const cartData = async() => {
+  const cartData = async(selector) => {
+    console.log(selector)
     try {
-      const items = await appwriteService.getCartData(ip)
+      const items = await appwriteService.getCartData(selector)
       if(items) {
         setCartValue(items.total)
         setCartItems(items.documents)
       }
     } catch (error) {
-      
+      console.log(error)
+    }
+  }
+
+  const currentUser = async() => {
+    try {
+      const user = await authService.getCurrentUser()
+      if(user) {
+        if (user === "User (role: guests) missing scope (account)") {
+          const anonymous = await authService.anonymousSession()
+            if(anonymous) {
+              const userID = anonymous.$id
+              setSelector(userID)
+            }
+          } else {
+            const userID = user.$id
+            setSelector(userID)
+          }
+        }
+      }
+     catch (error) {
+      console.log(error.message)
     }
   }
 
   useEffect(() => {
-    cartData()
+    cartData(selector)
   })
+
+  useEffect(() => {
+    currentUser()
+  },[])
 
  
 
@@ -85,14 +103,14 @@ function Header() {
 
       {/* Side Cart Start */}
       <div onClick={() => setToggleHidden(!toggleHidden)}  className={`${toggleHidden? "flex z-10" : "hidden"} absolute w-full h-lvh bg-black/30 cursor-pointer`}/>
-    <div className={`${toggleHidden? "flex flex-col animate-[rightIn_1s] z-10" : "hidden"} h-screen md:w-[350px] sm:w-5/6 w-full absolute bg-white right-0`}>
+    <div className={`${toggleHidden? "flex flex-col justify-between animate-[rightIn_1s] z-10" : "hidden"} h-screen md:w-[350px] sm:w-5/6 w-full absolute bg-white right-0`}>
       
       <div className='flex justify-between w-full h-[65px] border-b-[1px] border-slate-300'>
         <h1 className='ml-10 my-auto text-[#7faf59] font-bold'>Shopping Cart</h1>
         <button onClick={() => setToggleHidden(!toggleHidden)} className='mr-5 text-[#7faf59]'>&#10005;</button>
       </div>
       {cartItems && <CartItems handelMenu={handelMenu} cartItems={cartItems}/>}
-      <div className=' bg-red-400'>
+      <div className='relative'>
             <Button onClick={() => navigate('/cart')} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' absolute bottom-20 hover:bg-green-900 text-white"}>VIEW CART</Button>
             <Button onClick={() => handelNavigate()} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' absolute bottom-2 hover:bg-green-900 text-white"}>{(cartItems.length > 0)? "CHECKOUT" : "CONTINUE SHOPPING"}</Button>
       </div>

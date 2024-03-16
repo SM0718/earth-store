@@ -12,19 +12,18 @@ export class Service{
         this.databases = new Databases(this.client);
     }
 
-    async createCartItems(productName, productImg, productPrice, amount, ip){
-        console.log(ip)
+    async createCartItems(name, price, userID, img){
+        console.log(name, price, userID, img)
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 ID.unique(),
                 {
-                    productName,
-                    productImg,
-                    productPrice,
-                    amount,
-                    ip,
+                    name,
+                    price,
+                    userID,
+                    img,
                 }
             )
         } catch (error) {
@@ -32,17 +31,14 @@ export class Service{
         }
     }
 
-    async updateCartProducts(slug, {productName, productImg, productPrice, amount}){
+    async updateCartProducts(slug, {amount}){
         try {
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
                 {
-                    productName,
-                    productImg,
-                    productPrice,
-                    amount,
+                    amount
                 }
             )
         } catch (error) {
@@ -59,8 +55,8 @@ export class Service{
             )
             return true
         } catch (error) {
-            alert("Appwrite serive :: deletePost :: error", error);
-            return false
+            console.log("Appwrite serive :: deletePost :: error", error);
+            // return false
         }
     }
 
@@ -77,18 +73,18 @@ export class Service{
         }
     }
 
-    async getCartData(ip){
+    async getCartData(userID){
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 [
-                    Query.startsWith("ip", ip)
+                    Query.equal("userID", userID)
                 ]
             )
         } catch (error) {
-            alert("Appwrite serive :: getPosts :: error", error);
-            return false
+            console.log("Appwrite serive :: getPosts :: error", error);
+            
         }
     }
 

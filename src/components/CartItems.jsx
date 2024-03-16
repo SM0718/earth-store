@@ -5,7 +5,6 @@ import appwriteService from '../appwrite/config'
 function CartItems(cartItems, handelMenu) {
 
   const navigate = useNavigate()
-  
   const deleteItem = async(postId) => {
     try {
       await appwriteService.deleteCartItem(postId)
@@ -15,15 +14,15 @@ function CartItems(cartItems, handelMenu) {
   }
     
   return (
-    <div className='h-1/2 overflow-scroll'>
+    <div className='h-1/2 overflow-scroll mb-auto'>
         {
-            cartItems.cartItems.map((items) => {
+        cartItems.cartItems.map((items) => {
                     return <div key={items.$id} className='flex justify-between mx-4 py-4 last:border-b-0 border-b'>
-                        <span onClick={() => navigate(`/shop/${items.productName}`)} className='flex cursor-pointer'>
-                            <img className='h-16 w-16 mx-4' src={`/${items.productImg}`}/>
+                        <span onClick={() => navigate(`/shop/${items.name}`)} className='flex cursor-pointer'>
+                            <img className='h-16 w-16 mx-4' src={`/${items.img}`}/>
                             <span className='py-1 flex flex-col justify-between'>
-                              <p>{items.productName}</p>
-                              <p className='text-[#585858]'>{`${items.amount} × Rs ${items.productPrice}`}</p>
+                              <p>{items.name}</p>
+                              <p className='text-[#585858]'>{`${items.amount} × Rs ${items.price}`}</p>
                             </span>
                         </span>
                         <span onClick={() => deleteItem(items.$id)} className='rounded-full border border-[#c4dab3] my-auto p-1 text-[#c4dab3] cursor-pointer'>
