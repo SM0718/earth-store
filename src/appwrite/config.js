@@ -12,7 +12,7 @@ export class Service{
         this.databases = new Databases(this.client);
     }
 
-    async createCartItems(name, price, userID, img){
+    async createCartItems(name, price, userID, img, amount){
         console.log(name, price, userID, img)
         try {
             return await this.databases.createDocument(
@@ -24,6 +24,7 @@ export class Service{
                     price,
                     userID,
                     img,
+                    amount,
                 }
             )
         } catch (error) {

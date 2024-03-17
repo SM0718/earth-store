@@ -7,6 +7,7 @@ import Input from '../components/Input'
 import Reviews from '../components/Reviews'
 import Recommemded from '../components/Recommemded'
 import Footer from '../components/Footer'
+import appwriteService from '../appwrite/config'
 import authService from '../appwrite/auth'
 
 function Product() {
@@ -16,21 +17,23 @@ function Product() {
   const navigate = useNavigate()
   const [amount, setAmount] = useState(1)
 
-  const session = async() => {
-    try {
-      // const sessionData = await authService.anonymousSession()
-      // if(sessionData){
-      //   console.log(sessionData)
-      const currentUser = await authService.getCurrentUser()
-      if(currentUser){
-        console.log(currentUser)
-      }
-      }
-     catch (error) {
-      console.log(error)
+  const addItem = async(name, price, img, amount) => {
+    if(amount > 20) {
+      setAmount(20)
     }
-  }
-
+    try {
+        const user = await authService.getCurrentUser()
+        if(user){
+          const info = await appwriteService.createCartItems(name, price.toString(), user.$id, img, amount)
+        if(info) {
+            console.log(info)
+          }
+        }
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
   
   
   
@@ -77,10 +80,19 @@ function Product() {
             <div className='flex'>
               <Button onClick={() => setAmount((prev) => (amount > 1)? prev-1 : prev)} className="w-10 border flex justify-center items-center p-2">-</Button>
               <Input onKeyDown={(e) => handelKeyDown(e.nativeEvent.key)} className="w-10 border text-center p-2" type={'text'} value={amount}/>
-              <Button onClick={() => setAmount((prev) => prev+1)} className="w-10 border flex justify-center items-center p-2">+</Button>
+              <Button onClick={() => setAmount((prev) => (amount < 20)? prev+1 : prev)} className="w-10 border flex justify-center items-center p-2">+</Button>
             </div>
             <div>
-              <Button className={"bg-[#74A84A] tracking-wide px-4 py-2 text-white hover:bg-green-800"}>
+              <Button
+                onClick={() =>
+                  addItem(
+                        poster[0].posterName,
+                        poster[0].posterPrice,
+                        poster[0].posterImg,
+                        amount
+                    )
+                }
+                className={"bg-[#74A84A] tracking-wide px-4 py-2 text-white hover:bg-green-800"}>
                 ADD TO CART
               </Button>
             </div>
