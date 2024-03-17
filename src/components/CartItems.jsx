@@ -45,10 +45,10 @@ function CartItems({ cartItems }) {
         ))}
       </div>
       
-      <div className='relative flex flex-col gap-4 my-4 '>
+      <div className='flex flex-col gap-4 my-4'>
         <span className='w-full flex justify-between px-4 py-4 border-t border-b'>
           <strong className='text-[#74A84A]'>Subtotal:</strong>
-          <p className='text-[#585858] text-[17px] '>Rs: {cartValue.toFixed(2)}</p>
+          <p className='text-[#585858] text-[17px] '>Rs {cartValue}</p>
         </span>
             <Button onClick={() => navigate('/cart')} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' hover:bg-green-900 text-white"}>VIEW CART</Button>
             <Button onClick={() => handelNavigate()} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto'  hover:bg-green-900 text-white"}>{(cartItems.length > 0)? "CHECKOUT" : "CONTINUE SHOPPING"}</Button>

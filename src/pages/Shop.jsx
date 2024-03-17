@@ -13,7 +13,7 @@ import authService from '../appwrite/auth';
 function Shop() {
   
   const {register, handleSubmit} = useForm()
-  const [val, setVal] = useState(80)
+  const [val, setVal] = useState(9999)
   const [totalItems, setTotalItems] = useState(posters.length)
   const [data, setData] = useState(posters)
   const [searchVal, setSearchVal] = useState("")
@@ -106,8 +106,8 @@ useEffect(() => {
           <Input 
           className="w-full"
           type="range"
-          min="11"
-          max="80"
+          min="1000"
+          max="9999"
           value={val}
           onChange={(e) => handleChange(e)}
           />
@@ -173,7 +173,7 @@ useEffect(() => {
                       <div className='mb-4'>
                           <p className='text-[14.45px] text-[#585858] my-2'>POSTERS</p>
                           <h3 className='text-[15px] font-semibold mb-1'>{items.posterName}</h3>
-                          <h5 className='text-[15px] font-semibold'>${items.posterPrice}</h5>
+                          <h5 className='text-[15px] font-semibold'>Rs {items.posterPrice}</h5>
                       </div>
                     </div>) : <div className='w-full flex flex-col justify-center content-center gap-10'>
                         <div className='w-16 h-16 mx-auto rounded-full border-2 border-t-black animate-spin'/>

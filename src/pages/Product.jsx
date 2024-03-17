@@ -15,35 +15,51 @@ function Product() {
   const {slug} = useParams()
   const poster = posters.filter((items) => items.posterName === slug)
   const navigate = useNavigate()
+  const location = useLocation()
   const [amount, setAmount] = useState(1)
+  
+  useEffect(() => {
+    setAmount(1)
+  }, [location])
 
-  const addItem = async(name, price, img, amount) => {
-    if(amount > 20) {
-      setAmount(20)
-    }
-    try {
-        const user = await authService.getCurrentUser()
-        if(user){
-          const info = await appwriteService.createCartItems(name, price.toString(), user.$id, img, amount)
-        if(info) {
-            console.log(info)
-          }
+const addItem = async(name, price, img, amount) => {
+  try {
+      const user = await authService.getCurrentUser()
+      if(user){
+        const items = await appwriteService.getCartData(user.$id)
+        {
+            if(items.total > 0) {
+                const hasItem = items.documents.filter((item) => item.name === name)
+                if(hasItem.length > 0) {
+                    const returnedValue = await appwriteService.updateCartProducts(hasItem[0].$id, {amount: hasItem[0].amount + Number(amount)})
+                    if(returnedValue === 'Invalid document structure: Attribute "amount" has invalid format. Value must be a valid range between 1 and 1,000') {
+                      alert("Out Of Stock")
+                    }
+                } else {
+                    const returnedValue = await appwriteService.createCartItems(name, price.toString(), user.$id, img, Number(amount))
+                    if(returnedValue === 'Invalid document structure: Attribute "amount" has invalid format. Value must be a valid range between 1 and 1,000') {
+                      alert("Out Of Stock")
+                    }
+                }
+            } else {
+                await appwriteService.createCartItems(name, price.toString(), user.$id, img, Number(amount))
+            }
         }
-        
-    } catch (error) {
-        console.log(error)
-    }
+      }
+      
+  } catch (error) {
+      console.log(error)
+  }
 }
   
-  
-  
-
   const handelKeyDown = (e) => {
-    if(!isNaN(e) && !(e === 'Backspace')) {
-      setAmount((prev) => prev + e)
-    } else if(e === 'Backspace') {
-      setAmount((prev) => prev? prev.slice(0, -1) : "")
-    } else {
+    
+    if(!isNaN(e) && e <= 20) {
+      setAmount(e)
+    } else if(e > 20) {
+      setAmount(20)
+    }
+     else {
       setAmount("")
     }
 }
@@ -75,11 +91,10 @@ function Product() {
             <p className='text-[25.5px] text-[#585858] my-2 font-bold'>Rs {poster[0].posterPrice}</p>
             <p className='text-[17px] leading-relaxed'>{poster[0].posterDesc}</p>
           </div>
-
           <div className='flex justify-start gap-8'>
             <div className='flex'>
               <Button onClick={() => setAmount((prev) => (amount > 1)? prev-1 : prev)} className="w-10 border flex justify-center items-center p-2">-</Button>
-              <Input onKeyDown={(e) => handelKeyDown(e.nativeEvent.key)} className="w-10 border text-center p-2" type={'text'} value={amount}/>
+              <Input onChange={(e) => handelKeyDown(e.target.value)} className="w-10 border text-center p-2" type={'text'} value={amount}/>
               <Button onClick={() => setAmount((prev) => (amount < 20)? prev+1 : prev)} className="w-10 border flex justify-center items-center p-2">+</Button>
             </div>
             <div>

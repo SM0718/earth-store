@@ -13,7 +13,6 @@ export class Service{
     }
 
     async createCartItems(name, price, userID, img, amount){
-        console.log(name, price, userID, img)
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -43,7 +42,7 @@ export class Service{
                 }
             )
         } catch (error) {
-            alert("Appwrite serive :: updatePost :: error", error);
+            return error.message
         }
     }
 
@@ -75,6 +74,7 @@ export class Service{
     }
 
     async getCartData(userID){
+        console.log(userID)
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,

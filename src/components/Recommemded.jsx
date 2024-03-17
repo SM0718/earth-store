@@ -3,21 +3,28 @@ import { posters } from '../infos/info';
 import { useNavigate } from 'react-router-dom';
 import appwriteService from '../appwrite/config'
 import authService from '../appwrite/auth';
-import { useDispatch, useSelector } from 'react-redux'
 
 
 function Recommended() {
     const data = posters.slice(0, 3);
     const navigate = useNavigate();
-    const userID = useSelector((state) => state.userID)
 
     const addItem = async(name, price, img,) => {
       try {
           const user = await authService.getCurrentUser()
           if(user){
-            const info = await appwriteService.createCartItems(name, price.toString(), user.$id, img)
-          if(info) {
-              console.log(info)
+            const items = await appwriteService.getCartData(user.$id)
+            {
+                if(items.total > 0) {
+                    const hasItem = items.documents.filter((item) => item.name === name)
+                    if(hasItem.length > 0) {
+                        await appwriteService.updateCartProducts(hasItem[0].$id, {amount: hasItem[0].amount + 1})
+                    } else {
+                        await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+                    }
+                } else {
+                    await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+                }
             }
           }
           
@@ -62,7 +69,7 @@ function Recommended() {
                         <div className='mb-4'>
                             <p className='text-[14.45px] text-[#585858] my-2'>POSTERS</p>
                             <h3 className='text-[15px] font-semibold mb-1'>{items.posterName}</h3>
-                            <h5 className='text-[15px] font-semibold'>${items.posterPrice}</h5>
+                            <h5 className='text-[15px] font-semibold'>Rs {items.posterPrice}</h5>
                         </div>
                     </div>
                 ))

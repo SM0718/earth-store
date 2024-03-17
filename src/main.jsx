@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import {store} from './app/store'
 import {
   About,
+  Cart,
   Contact,
   Home,
   Product,
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route path='/shop' element={<Shop />}/>
       <Route path='/contact' element={<Contact />}/>
       <Route path='/shop/:slug' element={<Product />}/>
+      <Route path='/cart' element={<Cart />} />
     </Route>
   ))
 
