@@ -84,45 +84,10 @@ export class Service{
                 ]
             )
         } catch (error) {
-            console.log("Appwrite serive :: getPosts :: error", error);
+            console.log("Appwrite serive :: getCartData :: error", error);
             
         }
     }
-
-    // async getBlogData(){
-    //     try {
-    //         return await this.databases.listDocuments(
-    //             conf.appwriteDatabaseId,
-    //             conf.appwriteBlogCollectionId,
-    //             [
-    //                 Query.orderDesc("date")
-    //             ]
-    //         )
-    //     } catch (error) {
-    //         alert("Appwrite serive :: getPosts :: error", error);
-    //         return false
-    //     }
-    // }
-
-    // async createOrder({name, address, email, phone, product, price}){
-    //     try {
-    //         return await this.databases.createDocument(
-    //             conf.appwriteDatabaseId,
-    //             conf.appwriteOrdersId,
-    //             ID.unique(),
-    //             {
-    //                 name,
-    //                 address,
-    //                 email,
-    //                 phone,
-    //                 product,
-    //                 price
-    //             }
-    //         )
-    //     } catch (error) {
-    //         alert("Appwrite serive :: createOrder :: error", error);
-    //     }
-    // }
 }
 
 

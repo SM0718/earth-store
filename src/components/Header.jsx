@@ -104,15 +104,11 @@ function Header() {
       <div onClick={() => setToggleHidden(!toggleHidden)}  className={`${toggleHidden? "flex z-10" : "hidden"} absolute w-full h-lvh bg-black/30 cursor-pointer`}/>
     <div className={`${toggleHidden? "flex flex-col justify-between animate-[rightIn_1s] z-10" : "hidden"} h-screen md:w-[350px] sm:w-5/6 w-full absolute bg-white right-0`}>
       
-      <div className='flex justify-between w-full h-[65px] border-b-[1px] border-slate-300'>
+      <div className='flex justify-between w-full border-b-[1px] py-4 border-slate-300'>
         <h1 className='ml-10 my-auto text-[#7faf59] font-bold'>Shopping Cart</h1>
         <button onClick={() => setToggleHidden(!toggleHidden)} className='mr-5 text-[#7faf59]'>&#10005;</button>
       </div>
       {cartItems && <CartItems handelMenu={handelMenu} cartItems={cartItems}/>}
-      {/* <div className='relative'>
-            <Button onClick={() => navigate('/cart')} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' absolute bottom-20 hover:bg-green-900 text-white"}>VIEW CART</Button>
-            <Button onClick={() => handelNavigate()} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' absolute bottom-2 hover:bg-green-900 text-white"}>{(cartItems.length > 0)? "CHECKOUT" : "CONTINUE SHOPPING"}</Button>
-      </div> */}
     </div>
     {/* Side Cart End */}
     

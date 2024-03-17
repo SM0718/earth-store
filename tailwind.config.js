@@ -19,6 +19,12 @@ export default {
     fontFamily: {
       serif: ["Roboto", "Jost"]
     },
+    scrollbar: {
+      hide: [
+        '&::-webkit-scrollbar { display: none; }',
+        'scrollbar-width: none; /* Firefox */',
+      ],
+    },
   },
   plugins: [],
 }

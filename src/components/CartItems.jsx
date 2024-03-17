@@ -25,8 +25,8 @@ function CartItems({ cartItems }) {
   }, [cartItems]);
 
   return (
-    <>
-      <div className='h-1/2 overflow-scroll mb-auto'>
+    <div>
+      <div className='h-1/2 overflow-scroll scrollbar-hide mb-auto'>
         {cartItems.map((item) => (
           <div key={item.$id} className='flex justify-between mx-4 py-4 last:border-b-0 border-b'>
             <span onClick={() => navigate(`/shop/${item.name}`)} className='flex cursor-pointer'>
@@ -45,7 +45,7 @@ function CartItems({ cartItems }) {
         ))}
       </div>
       
-      <div className='flex flex-col gap-4 my-4'>
+      <div className='flex flex-col gap-4 my-4 '>
         <span className='w-full flex justify-between px-4 py-4 border-t border-b'>
           <strong className='text-[#74A84A]'>Subtotal:</strong>
           <p className='text-[#585858] text-[17px] '>Rs {cartValue}</p>
@@ -53,7 +53,7 @@ function CartItems({ cartItems }) {
             <Button onClick={() => navigate('/cart')} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' hover:bg-green-900 text-white"}>VIEW CART</Button>
             <Button onClick={() => handelNavigate()} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto'  hover:bg-green-900 text-white"}>{(cartItems.length > 0)? "CHECKOUT" : "CONTINUE SHOPPING"}</Button>
       </div>
-    </>
+    </div>
   );
 }
 
