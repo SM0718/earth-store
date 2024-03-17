@@ -18,7 +18,6 @@ function Header() {
   const [selector, setSelector] = useState("")
 
   const cartData = async(selector) => {
-    console.log(selector)
     try {
       const items = await appwriteService.getCartData(selector)
       if(items) {
@@ -110,10 +109,10 @@ function Header() {
         <button onClick={() => setToggleHidden(!toggleHidden)} className='mr-5 text-[#7faf59]'>&#10005;</button>
       </div>
       {cartItems && <CartItems handelMenu={handelMenu} cartItems={cartItems}/>}
-      <div className='relative'>
+      {/* <div className='relative'>
             <Button onClick={() => navigate('/cart')} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' absolute bottom-20 hover:bg-green-900 text-white"}>VIEW CART</Button>
             <Button onClick={() => handelNavigate()} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' absolute bottom-2 hover:bg-green-900 text-white"}>{(cartItems.length > 0)? "CHECKOUT" : "CONTINUE SHOPPING"}</Button>
-      </div>
+      </div> */}
     </div>
     {/* Side Cart End */}
     
@@ -170,3 +169,5 @@ function Header() {
 }
 
 export default Header
+
+
