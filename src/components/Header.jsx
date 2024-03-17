@@ -102,13 +102,16 @@ function Header() {
 
       {/* Side Cart Start */}
       <div onClick={() => setToggleHidden(!toggleHidden)}  className={`${toggleHidden? "flex z-10" : "hidden"} absolute w-full h-lvh bg-black/30 cursor-pointer`}/>
-    <div className={`${toggleHidden? "flex flex-col justify-between animate-[rightIn_1s] z-10" : "hidden"} h-screen md:w-[350px] sm:w-5/6 w-full absolute bg-white right-0`}>
+    <div className={`${toggleHidden? "flex flex-col justify-start animate-[rightIn_1s] z-10" : "hidden"} h-screen md:w-[350px] sm:w-5/6 w-full absolute bg-white right-0`}>
       
-      <div className='flex justify-between w-full border-b-[1px] py-4 border-slate-300'>
+      <div className='h-full bg-yello-400 flex justify-between w-full border-b-[1px] py-4 border-slate-300'>
         <h1 className='ml-10 my-auto text-[#7faf59] font-bold'>Shopping Cart</h1>
         <button onClick={() => setToggleHidden(!toggleHidden)} className='mr-5 text-[#7faf59]'>&#10005;</button>
       </div>
-      {cartItems && <CartItems handelMenu={handelMenu} cartItems={cartItems}/>}
+      <div className='h-full flex flex-col justify-between'>
+        {cartItems && <CartItems handelMenu={handelMenu} cartItems={cartItems}/>}
+      </div>
+      
     </div>
     {/* Side Cart End */}
     
