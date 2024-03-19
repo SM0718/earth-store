@@ -25,8 +25,8 @@ function CartItems({ cartItems }) {
   }, [cartItems]);
 
   return (
-    <div className='min-h-full flex flex-col justify-between'>
-      <div className='h-1/2 overflow-scroll scrollbar-hide mb-auto'>
+    <div className='min-h-full flex flex-col justify-center'>
+      <div className='h-1/2 overflow-scroll scrollbar-hide'>
         {cartItems.map((item) => (
           <div key={item.$id} className='flex justify-between mx-4 py-4 last:border-b-0 border-b'>
             <span onClick={() => navigate(`/shop/${item.name}`)} className='flex cursor-pointer'>
@@ -45,7 +45,7 @@ function CartItems({ cartItems }) {
         ))}
       </div>
       
-      <div className='h-2/5 flex flex-col justify-center gap-2 mb-4'>
+      <div className='h-2/5 flex flex-col justify-center gap-2 mb-4 '>
       {
       (cartValue > 0) && <span className='w-full flex justify-between px-4 py-3 border-t border-b'>
           <strong className='text-[#74A84A]'>Subtotal:</strong>
