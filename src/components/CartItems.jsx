@@ -26,7 +26,7 @@ function CartItems({ cartItems }) {
 
   return (
     <div className='min-h-full flex flex-col justify-center'>
-      <div className='h-1/2 overflow-scroll scrollbar-hide'>
+      <div className='h-1/2 overflow-y-scroll no-scrollbar'>
         {cartItems.map((item) => (
           <div key={item.$id} className='flex justify-between mx-4 py-4 last:border-b-0 border-b'>
             <span onClick={() => navigate(`/shop/${item.name}`)} className='flex cursor-pointer'>
