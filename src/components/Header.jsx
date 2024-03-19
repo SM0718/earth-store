@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import Button from './Button'
 import appwriteService from '../appwrite/config'
-import { login } from '../app/playerSlicer'
 import authService from '../appwrite/auth'
 import CartItems from './CartItems'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 
 function Header() {
 
@@ -14,7 +14,7 @@ function Header() {
   const [toggleHidden, setToggleHidden] = useState()
   const [show, setShow] = useState(false)
   const [cartItems, setCartItems] = useState([])
-  const dispatch = useDispatch()
+  const location = useLocation()
   const [selector, setSelector] = useState("")
 
   const cartData = async(selector) => {
@@ -88,20 +88,22 @@ function Header() {
   ]
 
   const handelNavigate = () => {
-    setToggleHidden(!toggleHidden)
-    navigate('/shop')
+    if(location.pathname !== "/cart") {
+      console.log(location.pathname)
+      setToggleHidden(!toggleHidden)
+    }
   }
   
-  const handelMenu = (e) => {
+  const handelMenu = (path) => {
     setShow(false)
-    navigate(`${e}`)
+    navigate(`${path}`)
   }
 
   return (
     <div className='relative h-[80px] z-20 flex'>
 
       {/* Side Cart Start */}
-      <div onClick={() => setToggleHidden(!toggleHidden)}  className={`${toggleHidden? "flex z-10" : "hidden"} absolute w-full h-lvh bg-black/30 cursor-pointer`}/>
+      <div onClick={() => handelNavigate()}  className={`${toggleHidden? "flex z-10" : "hidden"} absolute w-full h-lvh bg-black/30 cursor-pointer`}/>
     <div className={`${toggleHidden? "flex flex-col justify-start animate-[rightIn_1s] z-10" : "hidden"} h-screen md:w-[350px] sm:w-5/6 w-full absolute bg-white right-0`}>
       
       <div className='flex justify-between w-full border-b-[1px] py-4 border-slate-300'>

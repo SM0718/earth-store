@@ -26,9 +26,18 @@ function Shop() {
     try {
         const user = await authService.getCurrentUser()
         if(user){
-          const info = await appwriteService.createCartItems(name, price.toString(), user.$id, img)
-        if(info) {
-            console.log(info)
+          const items = await appwriteService.getCartData(user.$id)
+          {
+              if(items.total > 0) {
+                  const hasItem = items.documents.filter((item) => item.name === name)
+                  if(hasItem.length > 0) {
+                      await appwriteService.updateCartProducts(hasItem[0].$id, {amount: hasItem[0].amount + 1})
+                  } else {
+                      await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+                  }
+              } else {
+                  await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+              }
           }
         }
         

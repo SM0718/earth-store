@@ -74,7 +74,6 @@ export class Service{
     }
 
     async getCartData(userID){
-        console.log(userID)
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
