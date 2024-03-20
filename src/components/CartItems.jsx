@@ -2,16 +2,20 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import appwriteService from '../appwrite/config';
 import Button from './Button';
+import { useDispatch } from 'react-redux';
+import { fetchCartData } from '../app/playerSlicer';
 
 function CartItems({ cartItems }) {
   const navigate = useNavigate();
   const [cartValue, setCartValue] = useState(0);
+  const dispatch = useDispatch()
 
   const deleteItem = async (postId, amount, price) => {
     try {
       const deleted = await appwriteService.deleteCartItem(postId);
       if(deleted) {
         setCartValue(prev => prev - (amount * price))
+        dispatch(fetchCartData())
       }
       ;
     } catch (error) {
@@ -52,8 +56,8 @@ function CartItems({ cartItems }) {
           <p className='text-[#585858] text-[17px] '>Rs {cartValue}</p>
         </span>
       }  
-            <Button onClick={() => navigate('/cart')} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' hover:bg-green-900 text-white"}>VIEW CART</Button>
-            <Button onClick={() => handelNavigate()} className={"w-full h-14 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto'  hover:bg-green-900 text-white"}>{(cartItems.length > 0)? "CHECKOUT" : "CONTINUE SHOPPING"}</Button>
+            <Button onClick={() => navigate('/cart')} className={"w-full h-12 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' hover:bg-green-900 text-white"}>VIEW CART</Button>
+            <Button onClick={() => handelNavigate()} className={"w-full h-12 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto'  hover:bg-green-900 text-white"}>{(cartItems.length > 0)? "CHECKOUT" : "CONTINUE SHOPPING"}</Button>
       </div>
       </div>
   );

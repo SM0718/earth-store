@@ -9,6 +9,8 @@ import Recommemded from '../components/Recommemded'
 import Footer from '../components/Footer'
 import appwriteService from '../appwrite/config'
 import authService from '../appwrite/auth'
+import { useDispatch } from 'react-redux';
+import { fetchCartData } from '../app/playerSlicer';
 
 function Product() {
 
@@ -17,6 +19,13 @@ function Product() {
   const navigate = useNavigate()
   const location = useLocation()
   const [amount, setAmount] = useState(1)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, [])
   
   useEffect(() => {
     setAmount(1)
@@ -31,18 +40,21 @@ const addItem = async(name, price, img, amount) => {
             if(items.total > 0) {
                 const hasItem = items.documents.filter((item) => item.name === name)
                 if(hasItem.length > 0) {
-                    const returnedValue = await appwriteService.updateCartProducts(hasItem[0].$id, {amount: hasItem[0].amount + Number(amount)})
-                    if(returnedValue === 'Invalid document structure: Attribute "amount" has invalid format. Value must be a valid range between 1 and 1,000') {
-                      alert("Out Of Stock")
-                    }
+                    const data = await appwriteService.updateCartProducts(hasItem[0].$id, {amount: hasItem[0].amount + Number(amount)})
+                    if(data) {
+                      dispatch(fetchCartData())
+                  }
                 } else {
-                    const returnedValue = await appwriteService.createCartItems(name, price.toString(), user.$id, img, Number(amount))
-                    if(returnedValue === 'Invalid document structure: Attribute "amount" has invalid format. Value must be a valid range between 1 and 1,000') {
-                      alert("Out Of Stock")
-                    }
+                    const data = await appwriteService.createCartItems(name, price.toString(), user.$id, img, Number(amount))
+                    if(data) {
+                      dispatch(fetchCartData())
+                  }
                 }
             } else {
-                await appwriteService.createCartItems(name, price.toString(), user.$id, img, Number(amount))
+                const data = await appwriteService.createCartItems(name, price.toString(), user.$id, img, Number(amount))
+                if(data) {
+                  dispatch(fetchCartData())
+              }
             }
         }
       }

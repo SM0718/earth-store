@@ -8,6 +8,8 @@ import {useForm} from 'react-hook-form'
 import { useNavigate, useLocation } from 'react-router-dom'
 import appwriteService from '../appwrite/config'
 import authService from '../appwrite/auth';
+import { useDispatch } from 'react-redux';
+import { fetchCartData } from '../app/playerSlicer';
 
 
 function Shop() {
@@ -20,7 +22,14 @@ function Shop() {
   const [sortingValue, setSortingValue] = useState("")
   const navigate = useNavigate()
   const location = useLocation()
+  const dispatch = useDispatch()
   const fullPath = location.pathname.split("/").filter(x => x)
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, [])
 
   const addItem = async(name, price, img,) => {
     try {
@@ -31,12 +40,21 @@ function Shop() {
               if(items.total > 0) {
                   const hasItem = items.documents.filter((item) => item.name === name)
                   if(hasItem.length > 0) {
-                      await appwriteService.updateCartProducts(hasItem[0].$id, {amount: hasItem[0].amount + 1})
+                      const data = await appwriteService.updateCartProducts(hasItem[0].$id, {amount: hasItem[0].amount + 1})
+                      if(data) {
+                        dispatch(fetchCartData())
+                    }
                   } else {
-                      await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+                      const data = await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+                      if(data) {
+                        dispatch(fetchCartData())
+                    }
                   }
               } else {
-                  await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+                  const data = await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+                  if(data) {
+                    dispatch(fetchCartData())
+                }
               }
           }
         }

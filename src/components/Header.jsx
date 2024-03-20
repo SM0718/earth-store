@@ -16,6 +16,7 @@ function Header() {
   const [cartItems, setCartItems] = useState([])
   const location = useLocation()
   const [selector, setSelector] = useState("")
+  const fetchCart = useSelector((state) => state.fetchData)
 
   const cartData = async(selector) => {
     try {
@@ -52,7 +53,7 @@ function Header() {
 
   useEffect(() => {
     cartData(selector)
-  })
+  }, [selector, fetchCart])
 
   useEffect(() => {
     currentUser()
@@ -74,10 +75,6 @@ function Header() {
       slug: "/"
     },
     {
-      name: "ABOUT",
-      slug: "/about"
-    },
-    {
       name: "SHOP",
       slug: "/shop"
     },
@@ -87,12 +84,12 @@ function Header() {
     },
   ]
 
-  const handelNavigate = () => {
-    if(location.pathname !== "/cart") {
-      console.log(location.pathname)
-      setToggleHidden(!toggleHidden)
-    }
-  }
+  // const handelNavigate = () => {
+  //   if(location.pathname !== "/cart") {
+  //     console.log(location.pathname)
+      
+  //   }
+  // }
   
   const handelMenu = (path) => {
     setShow(false)
@@ -103,7 +100,7 @@ function Header() {
     <div className='relative h-[80px] z-20 flex'>
 
       {/* Side Cart Start */}
-      <div onClick={() => handelNavigate()}  className={`${toggleHidden? "flex z-10" : "hidden"} absolute w-full h-lvh bg-black/30 cursor-pointer`}/>
+      <div onClick={() => setToggleHidden(!toggleHidden)}  className={`${toggleHidden? "flex z-10" : "hidden"} absolute w-full h-lvh bg-black/30 cursor-pointer`}/>
     <div className={`${toggleHidden? "flex flex-col justify-start animate-[rightIn_1s] z-10" : "hidden"} h-screen md:w-[350px] sm:w-5/6 w-full absolute bg-white right-0`}>
       
       <div className='flex justify-between w-full border-b-[1px] py-4 border-slate-300'>

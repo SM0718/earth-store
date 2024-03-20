@@ -25,7 +25,7 @@ function Footer() {
   ]
 
   return (
-    <div className='w-5/6 md:w-full mx-auto flex flex-col lg:flex-row justify-between z-20 border-t'>
+    <div className='w-5/6 md:w-full mx-auto flex flex-col lg:flex-row justify-between z-0 border-t'>
 
       <div className='w-4/5 my-auto mx-auto py-8 flex justify-evenly'>
         <div className='w-2/5 flex flex-col md:flex-row justify-between text-center gap-4'>

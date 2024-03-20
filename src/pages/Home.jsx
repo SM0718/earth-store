@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect} from 'react'
 import Button from '../components/Button'
 import Footer from '../components/Footer'
 import { useNavigate } from 'react-router-dom'
-import { posters } from '../infos/info'
 import { reviews } from '../infos/reviews'
 import Recommemded from '../components/Recommemded'
 
 
 function Home() {
 
-  const data = posters.slice(0,3)
+
   const navigate = useNavigate()
   
 
@@ -17,6 +16,11 @@ function Home() {
     navigate("/shop")
   }
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, [])
 
   return (
     <>

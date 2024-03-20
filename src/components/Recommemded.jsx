@@ -3,11 +3,14 @@ import { posters } from '../infos/info';
 import { useNavigate } from 'react-router-dom';
 import appwriteService from '../appwrite/config'
 import authService from '../appwrite/auth';
+import { useDispatch } from 'react-redux';
+import { fetchCartData } from '../app/playerSlicer';
 
 
 function Recommended() {
     const data = posters.slice(0, 3);
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const addItem = async(name, price, img,) => {
       try {
@@ -18,12 +21,21 @@ function Recommended() {
                 if(items.total > 0) {
                     const hasItem = items.documents.filter((item) => item.name === name)
                     if(hasItem.length > 0) {
-                        await appwriteService.updateCartProducts(hasItem[0].$id, {amount: hasItem[0].amount + 1})
+                        const data = await appwriteService.updateCartProducts(hasItem[0].$id, {amount: hasItem[0].amount + 1})
+                        if(data) {
+                            dispatch(fetchCartData())
+                        }
                     } else {
-                        await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+                        const data = await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+                        if(data) {
+                            dispatch(fetchCartData())
+                        }
                     }
                 } else {
-                    await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+                    const data = await appwriteService.createCartItems(name, price.toString(), user.$id, img)
+                    if(data) {
+                        dispatch(fetchCartData())
+                    }
                 }
             }
           }

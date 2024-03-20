@@ -1,18 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    state: false,
-    userID: "",
-
+    fetchData: false
 }
 
 export const playerInfoSlice = createSlice({
     name: 'playerInfo',
     initialState,
     reducers: {
-        login: (state, action) => {
-            state.status = true;
-            state.userID = action.payload.userID;
+        fetchCartData: (state, action) => {
+            state.fetchData = !state.fetchData;
         },
     }
 })
@@ -20,5 +17,5 @@ export const playerInfoSlice = createSlice({
 
 
 
-export const {login} = playerInfoSlice.actions
+export const {fetchCartData} = playerInfoSlice.actions
 export default playerInfoSlice.reducer

@@ -1,15 +1,15 @@
 import Home from "./Home";
-import About from "./About";
 import Shop from "./Shop";
-import Contact from "./About";
+import Contact from "./Contact";
 import Product from "./Product";
 import Cart from "./Cart";
+import Checkout from "./Checkout";
 
 export {
     Home,
-    About,
     Shop,
     Contact,
     Product,
     Cart,
+    Checkout
 }
