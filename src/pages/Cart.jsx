@@ -99,7 +99,7 @@ function Cart() {
                   </svg>
                 </span>
               </div>
-              }) : <div className='text-center mt-8'>
+              }) : <div className='text-center mt-8 mx-auto'>
                 <h1 className='text-2xl'>Your Cart Seems Empty &#128532;</h1>
                 <h2 onClick={() => navigate("/shop")} className='text-xl cursor-pointer text-[#74A84A] hover:text-green-900'>Shop Here</h2>
               </div>
@@ -107,8 +107,8 @@ function Cart() {
         </div>
            {
             (cartValue > 0)? 
-            <div className='w-2/3 mx-auto flex justify-end px-2 py-4 z-0'>
-              <span className='text-center flex gap-8 text-lg'>
+            <div className='w-2/3 mx-auto flex justify-center md:justify-end px-2 py-4 z-0'>
+              <span className='text-center flex flex-col md:flex-row  gap-8 text-lg'>
                 <span className='flex items-center gap-2'>
                   <p>Cart Total: </p>
                   <p>Rs {cartValue}</p>
