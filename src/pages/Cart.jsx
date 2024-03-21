@@ -118,7 +118,7 @@ function Cart() {
                   <p>Cart Total: </p>
                   <p>Rs {cartValue}</p>
                 </span>
-                <span onClick={() => navigate("/checkout")} className='bg-[#74A84A] hover:bg-green-900 hover:text-white px-4 py-2 flex items-center justify-center rounded'>
+                <span onClick={() => navigate("/checkout")} className='bg-[#74A84A] hover:bg-green-900 text-white px-4 py-2 flex items-center justify-center rounded'>
                   <Button>CHECKOUT</Button>
                 </span>
                 
