@@ -79,9 +79,14 @@ function Header() {
       slug: "/shop"
     },
     {
-      name: "CONTACT",
-      slug: "/contact"
+      name: "CART",
+      slug: "/cart"
     },
+    {
+      name: "CHECKOUT",
+      slug: "/checkout"
+    },
+    
   ]
 
   // const handelNavigate = () => {
@@ -96,6 +101,10 @@ function Header() {
     navigate(`${path}`)
   }
 
+  const handelCartClick = () => {
+    setToggleHidden(false)
+  }
+
   return (
     <div className='relative h-[80px] z-20 flex'>
 
@@ -108,7 +117,7 @@ function Header() {
         <button onClick={() => setToggleHidden(!toggleHidden)} className='mr-5 text-[#7faf59]'>&#10005;</button>
       </div>
       
-        {cartItems && <CartItems handelMenu={handelMenu} cartItems={cartItems}/>}
+        {cartItems && <CartItems handelCartClick={handelCartClick} handelMenu={handelMenu} cartItems={cartItems}/>}
       
       
     </div>
@@ -124,10 +133,10 @@ function Header() {
       {/* Visible Navigation Start */}
         <div className='w-3/5 my-auto flex justify-end relative'>
 
-        <div className='w-2/5 xl:flex hidden justify-between mx-auto'>
+        <div className='w-1/3 xl:flex hidden justify-between mx-auto'>
        {
-        headerItems.map((items) => <div key={items.name} className='"serif": "Roboto" text-[17px] font-[17px]'>
-            <NavLink to={items.slug}>{items.name}</NavLink>
+        headerItems.map((items) => <div key={items.name} className='"serif": "Roboto" text-[17px] font-[17px] hover:text-[#74A84A]'>
+            <NavLink className={({isActive}) => `${isActive ? "text-[#74A84A] font-semibold" : "text-black"}`} to={items.slug}>{items.name}</NavLink>
           </div>
           
         )

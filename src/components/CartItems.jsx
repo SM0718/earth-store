@@ -5,7 +5,7 @@ import Button from './Button';
 import { useDispatch } from 'react-redux';
 import { fetchCartData } from '../app/playerSlicer';
 
-function CartItems({ cartItems }) {
+function CartItems({ cartItems, handelCartClick }) {
   const navigate = useNavigate();
   const [cartValue, setCartValue] = useState(0);
   const dispatch = useDispatch()
@@ -27,6 +27,16 @@ function CartItems({ cartItems }) {
     const total = cartItems.reduce((acc, item) => acc + Number(item.amount) * Number(item.price), 0);
     setCartValue(total);
   }, [cartItems]);
+
+  const handleClick = () => {
+    handelCartClick()
+    navigate('/cart')
+  }
+
+  const handelCheckoutCLick = () => {
+    handelCartClick()
+    navigate('/checkout')
+  }
 
   return (
     <div className='min-h-full flex flex-col justify-center'>
@@ -56,8 +66,8 @@ function CartItems({ cartItems }) {
           <p className='text-[#585858] text-[17px] '>Rs {cartValue}</p>
         </span>
       }  
-            <Button onClick={() => navigate('/cart')} className={"w-full h-12 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' hover:bg-green-900 text-white"}>VIEW CART</Button>
-            <Button onClick={() => handelNavigate()} className={"w-full h-12 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto'  hover:bg-green-900 text-white"}>{(cartItems.length > 0)? "CHECKOUT" : "CONTINUE SHOPPING"}</Button>
+            <Button onClick={() => handleClick()} className={"w-full h-12 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto' hover:bg-green-900 text-white"}>VIEW CART</Button>
+            <Button onClick={() => handelCheckoutCLick()} className={"w-full h-12 bg-[#74a84a] text-center text-[16px] font-semibold tracking-widest 'serif': 'Roboto'  hover:bg-green-900 text-white"}>{(cartItems.length > 0)? "CHECKOUT" : "CONTINUE SHOPPING"}</Button>
       </div>
       </div>
   );

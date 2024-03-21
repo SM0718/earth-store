@@ -5,6 +5,7 @@ import authService from '../appwrite/auth';
 import Button from '../components/Button';
 import Footer from '../components/Footer'
 import Input from '../components/Input';
+import Breadcrumb from '../components/Breadcrumb'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCartData } from '../app/playerSlicer';
 
@@ -80,17 +81,21 @@ function Cart() {
   return (
     <>
       <div className=''>
-        <h1 className='text-center text-4xl font-semibold my-4'>YOUR CART</h1>
+        <span className='w-full md:w-3/4 mx-auto flex flex-col md:flex-row justify-between items-center'>
+          <h1 className='text-center text-4xl font-semibold my-4'>YOUR CART</h1>
+          <Breadcrumb  className={"text-lg"}/>
+        </span>
+        
 
         <div className='h-[400px] flex flex-col mt-8 items-start md:items-center overflow-y-scroll no-scrollbar'>
             {
               (cartItems.length !== 0)? cartItems.map((item) => {
-                return <div key={item.$id} className='w-full md:w-3/4 flex justify-between px-2 py-4 border'>
+                return <div key={item.$id} className='w-full md:w-3/4 flex justify-between px-2 py-4 border-2'>
                 <span  className='w-5/6 mx-auto flex justify-between'>
-                  <img onClick={() => navigate(`/shop/${item.name}`)} className='h-16 w-16 cursor-pointer mx-4' src={`/${item.img}`} alt={item.name} />
-                  <span className='w-full py-1  flex md:flex-row flex-col md:justify-evenly justify-between md:items-center'>
-                    <p onClick={() => navigate(`/shop/${item.name}`)} className='cursor-pointer text-[#74A84A] hover:text-green-900'>{item.name}</p>
-                    <p className='text-[#585858]'>{`${item.amount} × Rs ${item.price}`}</p>
+                  <img onClick={() => navigate(`/shop/${item.name}`)} className='size-20 cursor-pointer mx-4' src={`/${item.img}`} alt={item.name} />
+                  <span className='w-full py-1 flex md:flex-row flex-col md:justify-evenly justify-between md:items-center'>
+                    <p onClick={() => navigate(`/shop/${item.name}`)} className='cursor-pointer text-lg text-[#74A84A] hover:text-green-900'>{item.name}</p>
+                    <p className='text-[#585858] text-lg font-semibold'>{`${item.amount} × Rs ${item.price}`}</p>
                   </span>
                 </span>
                 <span onClick={() => deleteItem(item.$id, Number(item.amount), Number(item.price))} className='rounded-full border border-[#c4dab3] my-auto p-1 mr-4  text-[#74A84A] hover:text-green-900 cursor-pointer'>
@@ -99,9 +104,9 @@ function Cart() {
                   </svg>
                 </span>
               </div>
-              }) : <div className='text-center mt-8 mx-auto'>
+              }) : <div className='text-center my-6 mx-auto'>
                 <h1 className='text-2xl'>Your Cart Seems Empty &#128532;</h1>
-                <h2 onClick={() => navigate("/shop")} className='text-xl cursor-pointer text-[#74A84A] hover:text-green-900'>Shop Here</h2>
+                <h2 onClick={() => navigate("/shop")} className='text-xl mb-2 cursor-pointer text-[#74A84A] hover:text-green-900'>Shop Here</h2>
               </div>
             }
         </div>
