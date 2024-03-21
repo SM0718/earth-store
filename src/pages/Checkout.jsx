@@ -132,7 +132,7 @@
             }
             <div>
               <p className='text-lg text-center py-4 font-semibold'>SUBTOTAL: {cartValue}</p>
-              <span onClick={() => navigate(`${(cartItems.length)? "/checkout" : "/shop"}`)} className='bg-[#74A84A] hover:bg-green-900 hover:text-white px-4 py-4 cursor-pointer flex items-center justify-center rounded'>
+              <span onClick={() => navigate(`${(cartItems.length)? "/checkout" : "/shop"}`)} className='bg-[#74A84A] hover:bg-green-900 text-white px-4 py-4 cursor-pointer flex items-center justify-center rounded'>
                   <Button>{(cartItems.length)? "PAYMENT" : "CONTINUE SHOPPING"}</Button>
                 </span>
             </div>
